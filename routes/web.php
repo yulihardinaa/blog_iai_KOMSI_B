@@ -15,4 +15,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+//untuk menyimpan
 $router->post('/content','ContentController@store');
+
+//Menampilkan semua data
+$router->get('/content','ContentController@index');
+
+//menampilkan salah satu data
+$router->get('/content/{id}','ContentController@show');
+
+// untuk mengubah data tertentu
+$router->put('/content/{id}','ContentController@update');
+
+// untuk menghapus data tertentu
+$router->delete('/content/{id}','ContentController@destroy');
