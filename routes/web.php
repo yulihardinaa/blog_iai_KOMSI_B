@@ -15,17 +15,30 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-//untuk menyimpan
-$router->post('/content','ContentController@store');
+//untug group
+$router->group(
+    ['middleware'=>'jwt.auth'],
+    function() use ($router){
 
-//Menampilkan semua data
-$router->get('/content','ContentController@index');
+            //untuk menyimpan
+            $router->post('/content','ContentController@store');
 
-//menampilkan salah satu data
-$router->get('/content/{id}','ContentController@show');
+            //Menampilkan semua data
+            $router->get('/content','ContentController@index');
 
-// untuk mengubah data tertentu
-$router->put('/content/{id}','ContentController@update');
+            //menampilkan salah satu data
+            $router->get('/content/{id}','ContentController@show');
 
-// untuk menghapus data tertentu
-$router->delete('/content/{id}','ContentController@destroy');
+            // untuk mengubah data tertentu
+            $router->put('/content/{id}','ContentController@update');
+
+            // untuk menghapus data tertentu
+            $router->delete('/content/{id}','ContentController@destroy');
+    }
+);
+//untuk POST pada user
+$router->post('/user','UserController@store');
+//Untuk Log In
+$router->post('/auth/login',[
+    'uses'=>'AuthController@authenticate'
+]);
